@@ -9,13 +9,20 @@ from spammer_pages import HomePage
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
-browser = webdriver.Chrome('./chromedriver.exe', chrome_options=chrome_options)
+browser = webdriver.Chrome('./chromedriver.exe', options=chrome_options)
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
 
 home_page = HomePage(browser)
 home_page.login("mjarmak", "B~ND9c,Q$4zscyU")
+
+home_page.goto("https://www.instagram.com/explore/tags/nature/")
+
+# home_page.first_picture()
+# home_page.like_pic()
+# home_page.next_picture()
+home_page.like_pictures(100)
 
 sleep(15)
 
