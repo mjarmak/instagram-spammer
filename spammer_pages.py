@@ -1,3 +1,6 @@
+#! /bin/bash
+"exec" "$(which python3)" "$0" "$*"
+
 import sys
 from time import sleep
 import selenium
