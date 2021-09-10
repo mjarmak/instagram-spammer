@@ -23,7 +23,7 @@ class HomePage:
             if(soup.find('svg')['aria-label'] == 'Like'):
                 like.click()
         except:
-            print("Like button not found, moving on to the next picture.", file=sys.stdout)
+            print("Like button not found, moving on to the next picture.", file=sys.stderr)
             return 0
 
     def next_picture(self):
@@ -37,10 +37,10 @@ class HomePage:
         self.first_picture()
         self.like_pic()
         number -= 1
-        print("Liked, " + str(number) + " left.", file=sys.stdout)
+        print("Liked, " + str(number) + " left.", file=sys.stderr)
         while number > 0:
             number -= 1
-            print("Liked, " + str(number) + " left.", file=sys.stdout)
+            print("Liked, " + str(number) + " left.", file=sys.stderr)
             next_el = self.next_picture()
             # if next button is there then
             if next_el != False:
@@ -50,7 +50,7 @@ class HomePage:
                 self.like_pic()
                 sleep(2)
             else:
-                print("Next picture not found.", file=sys.stdout)
+                print("Next picture not found.", file=sys.stderr)
                 break
 
     def login(self, username, password):
