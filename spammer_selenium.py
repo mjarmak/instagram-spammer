@@ -9,6 +9,8 @@ from spammer_pages import HomePage
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
+# chrome_options.headless = True
+# chrome_options.add_argument("--headless")
 browser = webdriver.Chrome('./chromedriver.exe', options=chrome_options)
 
 browser.implicitly_wait(1)

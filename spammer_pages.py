@@ -1,3 +1,4 @@
+import sys
 from time import sleep
 import selenium
 from bs4 import BeautifulSoup as bs
@@ -22,7 +23,7 @@ class HomePage:
             if(soup.find('svg')['aria-label'] == 'Like'):
                 like.click()
         except:
-            print("Like button not found, moving on to the next picture.")
+            print("Like button not found, moving on to the next picture.", file=sys.stdout)
             return 0
 
     def next_picture(self):
@@ -36,10 +37,10 @@ class HomePage:
         self.first_picture()
         self.like_pic()
         number -= 1
-        print("liked")
+        print("Liked, " + str(number) + " left.", file=sys.stdout)
         while number > 0:
             number -= 1
-            print("liked")
+            print("Liked, " + str(number) + " left.", file=sys.stdout)
             next_el = self.next_picture()
             # if next button is there then
             if next_el != False:
@@ -49,7 +50,7 @@ class HomePage:
                 self.like_pic()
                 sleep(2)
             else:
-                print("Next picture not found.")
+                print("Next picture not found.", file=sys.stdout)
                 break
 
     def login(self, username, password):
