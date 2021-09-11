@@ -2,6 +2,7 @@
 "exec" "$(which python3)" "$0" "$*"
 
 import sys
+import os
 from time import sleep
 from selenium import webdriver
 from spammer_pages import InstagramBrowser
@@ -26,7 +27,9 @@ options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
 
-browser = webdriver.Chrome(options=options)
+options.binary_location = os.environ.get("GOOGLE_CHROME_BINARY")
+CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
+browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=options)
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
