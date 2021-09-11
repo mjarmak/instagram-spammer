@@ -15,19 +15,21 @@ from spammer_pages import HomePage
 
 print("Starting...", file=sys.stderr)
 
-GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
-CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+# GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+# CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 # CHROMEDRIVER_PATH = './chromedriver.exe'
 
 # os.chmod('./chromedriver.exe', 0o755)
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--incognito")
-chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.binary_location = GOOGLE_CHROME_PATH
+options = webdriver.ChromeOptions()
+# chrome_options.add_argument("--incognito")
+options.add_argument("--headless")
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
+# options.binary_location = GOOGLE_CHROME_PATH
 # chrome_options.headless = True
 # chrome_options.add_argument("--headless")
-browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=chrome_options)
+
+browser = webdriver.Chrome(options=options)
 
 
 browser.implicitly_wait(1)
