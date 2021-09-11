@@ -6,7 +6,7 @@ from time import sleep
 import selenium
 from bs4 import BeautifulSoup as bs
 
-class HomePage:
+class InstagramBrowser:
     def __init__(self, browser):
         self.browser = browser
         self.browser.get('https://www.instagram.com/')
