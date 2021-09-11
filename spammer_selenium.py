@@ -29,7 +29,7 @@ options.add_argument('--disable-dev-shm-usage')
 
 options.binary_location = os.environ.get("GOOGLE_CHROME_BINARY")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
-browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=options)
+browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
