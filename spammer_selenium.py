@@ -3,12 +3,14 @@ import sys
 from time import sleep
 from selenium import webdriver
 from spammer_pages import HomePage
+import os
 
 # browser_executable_path = r'C:\Program Files (x86)\Mozilla Firefox\firefox.exe'
 # browser = webdriver.Firefox(executable_path=browser_executable_path)
 
 print("Starting...", file=sys.stderr)
 
+os.chmod('./chromedriver.exe', 0o755)
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
 # chrome_options.headless = True
