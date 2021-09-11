@@ -23,8 +23,8 @@ print("Starting...", file=sys.stderr)
 options = webdriver.ChromeOptions()
 # chrome_options.add_argument("--incognito")
 # options.add_argument("--headless")
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
+# options.add_argument('--disable-gpu')
+# options.add_argument('--no-sandbox')
 # options.binary_location = GOOGLE_CHROME_PATH
 # chrome_options.headless = True
 # chrome_options.add_argument("--headless")
