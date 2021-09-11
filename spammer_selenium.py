@@ -36,7 +36,7 @@ browser.get('https://www.instagram.com/')
 print('Opened Instagram.')
 instagram_browser = InstagramBrowser(browser)
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
-
+print("Logged in.", file=sys.stderr)
 url = "https://www.instagram.com/explore/tags/" + tag
 print("Opening '" + url + "'.", file=sys.stderr)
 instagram_browser.goto(url)

@@ -26,8 +26,8 @@ options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
 
-# user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
-# options.add_argument(f'user-agent={user_agent}')
+user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
+options.add_argument(f'user-agent={user_agent}')
 
 browser = webdriver.Chrome(options=options)
 
@@ -37,7 +37,7 @@ print('Opened Instagram.')
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser = InstagramBrowser(browser)
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
-
+print("Logged in.", file=sys.stderr)
 url = "https://www.instagram.com/explore/tags/" + tag
 print("Opening '" + url + "'.", file=sys.stderr)
 instagram_browser.goto(url)
