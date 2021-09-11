@@ -13,7 +13,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
 # chrome_options.headless = True
 # chrome_options.add_argument("--headless")
-browser = webdriver.Chrome('./chromedriver.exe', options=chrome_options)
+browser = webdriver.Chrome(executable_path='./chromedriver.exe', options=chrome_options)
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
