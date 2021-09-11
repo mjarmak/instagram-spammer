@@ -54,9 +54,10 @@ class InstagramBrowser:
                 break
 
     def login(self, username, password):
+        self.browser.find_element_by_class_name('bIiDR').click()
         self.browser.find_element_by_css_selector("input[name='username']").send_keys(username)
         self.browser.find_element_by_css_selector("input[name='password']").send_keys(password)
-        self.browser.find_element_by_xpath("//*[contains(text(), 'Accept All')]").click()
+        # self.browser.find_element_by_xpath("//*[contains(text(), 'Accept All')]").click()
         sleep(1)
         self.browser.find_element_by_xpath("//button[@type='submit']").click()
         sleep(5)
