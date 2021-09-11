@@ -1,21 +1,34 @@
 # geckodriver exe from https://github.com/mozilla/geckodriver/releases/tag/v0.29.1
+# heroku buildpacks:add -a instagram-spammer-prod --index 1 https://github.com/heroku-buildpack-chromedriver
+# heroku buildpacks:add -a instagram-spammer-prod --index 2 https://github.com/heroku-buildpack-chromedriver
+# heroku config:set -a instagram-spammer-prod GOOGLE_CHROME_BIN=/app/.apt/usr/bin/google_chrome
+# heroku config:set -a instagram-spammer-prod CHROMEDRIVER_PATH=/app/.chromedriver/bin/chromedriver
+
+
 import sys
 from time import sleep
 from selenium import webdriver
 from spammer_pages import HomePage
-import os
 
 # browser_executable_path = r'C:\Program Files (x86)\Mozilla Firefox\firefox.exe'
 # browser = webdriver.Firefox(executable_path=browser_executable_path)
 
 print("Starting...", file=sys.stderr)
 
-os.chmod('./chromedriver.exe', 0o755)
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+# CHROMEDRIVER_PATH = './chromedriver.exe'
+
+# os.chmod('./chromedriver.exe', 0o755)
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--incognito")
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.binary_location = GOOGLE_CHROME_PATH
 # chrome_options.headless = True
 # chrome_options.add_argument("--headless")
-browser = webdriver.Chrome(executable_path='./chromedriver.exe', options=chrome_options)
+browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=chrome_options)
+
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
