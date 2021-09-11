@@ -8,13 +8,14 @@ from spammer_pages import InstagramBrowser
 
 print("Starting...", file=sys.stderr)
 
+# os.chmod('./chromedriver.exe', 0o755)
 options = webdriver.ChromeOptions()
-# chrome_options.add_argument("--incognito")
 # options.add_argument("--headless")
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 
 browser = webdriver.Chrome(options=options)
+
 
 browser.implicitly_wait(1)
 browser.get('https://www.instagram.com/')
