@@ -34,7 +34,7 @@ browser = webdriver.Chrome(options=options)
 
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
-print('Opened Instagram.')
+print('Opened Instagram.', file=sys.stderr)
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 print("Logged in.", file=sys.stderr)

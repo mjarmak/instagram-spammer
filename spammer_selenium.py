@@ -37,8 +37,8 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
-print('Opened Instagram.')
-print(instagram_browser.browser.page_source, file=sys.stderr)
+print('Opened Instagram.', file=sys.stderr)
+print('Content: ' + instagram_browser.browser.page_source, file=sys.stderr)
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 print("Logged in.", file=sys.stderr)
 url = "https://www.instagram.com/explore/tags/" + tag
