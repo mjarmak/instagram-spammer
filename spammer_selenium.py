@@ -7,6 +7,12 @@ from time import sleep
 from selenium import webdriver
 from spammer_pages import InstagramBrowser
 
+
+def wait(seconds):
+    print("Wait " + str(seconds) + " seconds.", file=sys.stderr)
+    sleep(seconds)
+
+
 tag = sys.argv[1]
 number = int(sys.argv[2])
 type = sys.argv[3]
@@ -46,22 +52,18 @@ browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
 instagram_browser.goto('https://www.instagram.com')
 print('Opening Instagram.', file=sys.stderr)
-print("Wait 10 seconds.", file=sys.stderr)
-sleep(10)
+wait(10)
 print('Opened Instagram.', file=sys.stderr)
-print('Url: ' + instagram_browser.browser.current_url, file=sys.stderr)
-print('Content: ' + instagram_browser.browser.page_source[0:500], file=sys.stderr)
+instagram_browser.print_contents()
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 print("Logged in.", file=sys.stderr)
-print("Wait 10 seconds.", file=sys.stderr)
-sleep(10)
+wait(10)
+instagram_browser.print_contents()
 url = "https://www.instagram.com/explore/tags/" + tag
 print("Opening '" + url + "'.", file=sys.stderr)
 instagram_browser.goto(url)
-print('Url: ' + instagram_browser.browser.current_url, file=sys.stderr)
-print('Content: ' + instagram_browser.browser.page_source[0:500], file=sys.stderr)
-print("Wait 10 seconds.", file=sys.stderr)
-sleep(10)
+instagram_browser.print_contents()
+wait(10)
 
 instagram_browser.like_pictures(number)
 

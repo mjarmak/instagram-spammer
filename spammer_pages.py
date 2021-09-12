@@ -11,6 +11,10 @@ class InstagramBrowser:
         self.browser = browser
         self.wait = WebDriverWait(self.browser, 20)
 
+    def print_contents(self):
+        print('Url: ' + self.browser.current_url, file=sys.stderr)
+        print('Content: ' + self.browser.page_source[0:500], file=sys.stderr)
+
     def goto(self, url):
         self.browser.get(url)
 
