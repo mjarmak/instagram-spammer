@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class InstagramBrowser:
     def __init__(self, browser):
         self.browser = browser
-        self.browser.get('https://www.instagram.com/')
+        self.browser.get('www.instagram.com')
         self.wait = WebDriverWait(self.browser, 20)
 
     def goto(self, url):
