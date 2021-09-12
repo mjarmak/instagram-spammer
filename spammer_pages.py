@@ -70,4 +70,3 @@ class InstagramBrowser:
         sleep(1)
         self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
         # self.browser.find_element_by_xpath("//button[@type='submit']").click()
-        sleep(5)
