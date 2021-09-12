@@ -8,6 +8,7 @@ from time import sleep
 from selenium import webdriver
 
 url = sys.argv[1]
+type = sys.argv[2]
 
 print("Starting...", file=sys.stderr)
 print("URL: " + url + ".", file=sys.stderr)
@@ -18,6 +19,12 @@ print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
 print("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
+
+if type == 'mobile':
+    print('Mobile view.')
+    mobile_emulation = {"deviceName": "iPhone X"}
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 

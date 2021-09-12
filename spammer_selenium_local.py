@@ -13,6 +13,7 @@ print("Starting...", file=sys.stderr)
 print("Tag: " + tag + ", Number: " + str(number) + ".", file=sys.stderr)
 
 options = webdriver.ChromeOptions()
+
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument("--incognito")
@@ -34,6 +35,7 @@ browser = webdriver.Chrome(options=options)
 
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
+instagram_browser.goto('https://www.instagram.com/accounts/login')
 print('Opened Instagram.', file=sys.stderr)
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
