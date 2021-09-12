@@ -32,7 +32,7 @@ CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
-print("GOOGLE_CHROME_BINARY " + os.environ.get("GOOGLE_CHROME_BINARY"))
+print("GOOGLE_CHROME_BINARY " + str(os.environ.get("GOOGLE_CHROME_BINARY")))
 
 
 browser.implicitly_wait(1)
