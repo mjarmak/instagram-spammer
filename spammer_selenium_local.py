@@ -36,7 +36,6 @@ browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
 print('Opened Instagram.')
 # browser.get_screenshot_as_file("screenshot.png")
-sleep(30)
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 print("Logged in.", file=sys.stderr)
 url = "https://www.instagram.com/explore/tags/" + tag
