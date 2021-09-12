@@ -31,11 +31,14 @@ options.binary_location = os.environ.get("GOOGLE_CHROME_BINARY")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
+print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
+print("GOOGLE_CHROME_BINARY " + os.environ.get("GOOGLE_CHROME_BINARY"))
+
+
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
 print('Opened Instagram.')
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
-sleep(30)
 print("Logged in.", file=sys.stderr)
 url = "https://www.instagram.com/explore/tags/" + tag
 print("Opening '" + url + "'.", file=sys.stderr)
