@@ -20,16 +20,16 @@ print("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
 
-if type == 'mobile':
+if type and type == 'mobile':
     print('Mobile view.')
-    mobile_emulation = {"deviceName": "iPhone X"}
+    mobile_emulation = {"deviceName": "iPad"}
     options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 
 options.add_argument("--headless")
-options.add_argument("--window-size=1920,1080")
+# options.add_argument("--window-size=1920,1080")
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--allow-running-insecure-content')
 options.add_argument("--disable-extensions")
