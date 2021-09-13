@@ -2,5 +2,5 @@ import sys
 
 
 def log(text):
-    print(text, file=sys.stdout)
+    print(text)
     sys.stdout.flush()
