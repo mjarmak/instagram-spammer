@@ -15,7 +15,8 @@ class InstagramBrowser:
 
     def print_contents(self):
         log('Url: ' + self.browser.current_url)
-        log('Content: ' + self.browser.page_source[0:250])
+        log('Title' + self.browser.title)
+        # log('Content: ' + self.browser.page_source[0:250])
 
     def goto(self, url):
         log("Opening '" + url + "'.")
