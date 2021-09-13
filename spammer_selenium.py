@@ -3,10 +3,18 @@
 
 import sys
 import os
+import time
 from time import sleep
 from selenium import webdriver
 from spammer_pages import InstagramBrowser
 
+
+# Nicely formatted time string
+def hms_string(sec_elapsed):
+    hour = int(sec_elapsed / (60 * 60))
+    minute = int((sec_elapsed % (60 * 60)) / 60)
+    second = sec_elapsed % 60
+    return "{}:{:>02}:{:>05.2f}".format(hour, minute, second)
 
 def wait(seconds):
     print("Wait " + str(seconds) + " seconds.", file=sys.stderr)
@@ -17,11 +25,15 @@ tag = sys.argv[1]
 number = int(sys.argv[2])
 type = sys.argv[3]
 
-print("Starting...", file=sys.stderr)
+now = time.strftime("%H:%M:%S")
+print("Started at " + now, file=sys.stderr)
 print("Tag: " + tag + ", Number: " + str(number) + ".", file=sys.stderr)
 
+USERNAME = os.environ.get("USERNAME")
+PASSWORD = os.environ.get("PASSWORD")
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
+print("USERNAME " + USERNAME)
 print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
 print("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
@@ -51,17 +63,19 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
 instagram_browser.goto('https://www.instagram.com')
-print('Opening Instagram.', file=sys.stderr)
 wait(10)
 print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
-instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
+instagram_browser.login(USERNAME, PASSWORD)
 print("Logged in.", file=sys.stderr)
 wait(10)
 instagram_browser.print_contents()
-url = "https://www.instagram.com/explore/tags/" + tag
-print("Opening '" + url + "'.", file=sys.stderr)
-instagram_browser.goto(url)
+
+if "Login" in instagram_browser.browser.title:
+    print('Login failed, stopping.', file=sys.stderr)
+    raise Exception('Login failed.')
+
+instagram_browser.goto("https://www.instagram.com/explore/tags/" + tag)
 instagram_browser.print_contents()
 wait(10)
 

@@ -13,9 +13,10 @@ class InstagramBrowser:
 
     def print_contents(self):
         print('Url: ' + self.browser.current_url, file=sys.stderr)
-        print('Content: ' + self.browser.page_source[0:500], file=sys.stderr)
+        print('Content: ' + self.browser.page_source[0:250], file=sys.stderr)
 
     def goto(self, url):
+        print("Opening '" + url + "'.", file=sys.stderr)
         self.browser.get(url)
 
     def first_picture(self):
@@ -40,9 +41,13 @@ class InstagramBrowser:
         except selenium.common.exceptions.NoSuchElementException:
             return False
 
+    def like_failed(self):
+        return False
+
     def like_pictures(self, number):
         self.first_picture()
         self.like_pic()
+        fail_counter = 0
         number -= 1
         print("Liked, " + str(number) + " left.", file=sys.stderr)
         while number > 0:
@@ -56,6 +61,14 @@ class InstagramBrowser:
                 # like the picture
                 self.like_pic()
                 sleep(2)
+                if self.like_failed():
+                    fail_counter += 1
+                    if fail_counter > 10:
+                        print("Like failed 10 consecutive times, stopping.")
+                        return
+                else:
+                    fail_counter = 0
+
             else:
                 print("Next picture not found.", file=sys.stderr)
                 break

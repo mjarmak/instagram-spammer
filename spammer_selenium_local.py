@@ -5,7 +5,14 @@ import sys
 from time import sleep
 from selenium import webdriver
 from spammer_pages import InstagramBrowser
+import time
 
+
+def hms_string(sec_elapsed):
+    hour = int(sec_elapsed / (60 * 60))
+    minute = int((sec_elapsed % (60 * 60)) / 60)
+    second = sec_elapsed % 60
+    return "{}:{:>02}:{:>05.2f}".format(hour, minute, second)
 
 def wait(seconds):
     print("Wait " + str(seconds) + " seconds.", file=sys.stderr)
@@ -16,7 +23,8 @@ tag = sys.argv[1]
 number = int(sys.argv[2])
 type = sys.argv[3]
 
-print("Starting...", file=sys.stderr)
+now = time.strftime("%H:%M:%S")
+print("Started at " + now, file=sys.stderr)
 print("Tag: " + tag + ", Number: " + str(number) + ".", file=sys.stderr)
 
 options = webdriver.ChromeOptions()
@@ -54,14 +62,9 @@ instagram_browser.print_contents()
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 wait(5)
 print("Logged in.", file=sys.stderr)
-url = "https://www.instagram.com/explore/tags/" + tag
-print("Opening '" + url + "'.", file=sys.stderr)
-instagram_browser.goto(url)
+instagram_browser.goto("https://www.instagram.com/explore/tags/" + tag)
 instagram_browser.print_contents()
 
-# home_page.first_picture()
-# home_page.like_pic()
-# home_page.next_picture()
 instagram_browser.like_pictures(number)
 
 sleep(5)
