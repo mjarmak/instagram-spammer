@@ -4,19 +4,20 @@
 import os
 import sys
 from time import sleep
+from logger import log
 
 from selenium import webdriver
 
 url = sys.argv[1]
 type = sys.argv[2]
 
-print("Starting...", file=sys.stderr)
-print("URL: " + url + ".", file=sys.stderr)
+log("Starting...")
+log("URL: " + url + ".")
 
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
-print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
-print("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
+log("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
+log("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
 
@@ -43,9 +44,9 @@ browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 browser.implicitly_wait(1)
 browser.get(url)
-print('Url: ' + browser.current_url, file=sys.stderr)
-print('Content: ' + browser.page_source, file=sys.stderr)
+log('Url: ' + browser.current_url)
+log('Content: ' + browser.page_source)
 
 sleep(5)
-print("Closing browser.")
+log("Closing browser.")
 browser.close()

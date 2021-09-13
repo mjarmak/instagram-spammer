@@ -4,6 +4,7 @@
 import sys
 import os
 import time
+from logger import log
 from time import sleep
 from selenium import webdriver
 from spammer_pages import InstagramBrowser
@@ -17,7 +18,7 @@ def hms_string(sec_elapsed):
     return "{}:{:>02}:{:>05.2f}".format(hour, minute, second)
 
 def wait(seconds):
-    print("Wait " + str(seconds) + " seconds.", file=sys.stderr)
+    log("Wait " + str(seconds) + " seconds.")
     sleep(seconds)
 
 
@@ -26,21 +27,21 @@ number = int(sys.argv[2])
 type = sys.argv[3]
 
 now = time.strftime("%H:%M:%S")
-print("Started at " + now, file=sys.stderr)
-print("Tag: " + tag + ", Number: " + str(number) + ".", file=sys.stderr)
+log("Started at " + now)
+log("Tag: " + tag + ", Number: " + str(number) + ".")
 
 USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
-print("USERNAME " + USERNAME)
-print("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
-print("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
+log("USERNAME " + USERNAME)
+log("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
+log("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
 
 if type and type == 'mobile':
-    print('Mobile view.')
+    log('Mobile view.')
     mobile_emulation = {"deviceName": "iPad"}
     options.add_experimental_option("mobileEmulation", mobile_emulation)
 
@@ -64,15 +65,15 @@ browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
 instagram_browser.goto('https://www.instagram.com')
 wait(10)
-print('Opened Instagram.', file=sys.stderr)
+log('Opened Instagram.')
 instagram_browser.print_contents()
 instagram_browser.login(USERNAME, PASSWORD)
-print("Logged in.", file=sys.stderr)
+log("Logged in.")
 wait(10)
 instagram_browser.print_contents()
 
 if "Login" in instagram_browser.browser.title:
-    print('Login failed, stopping.', file=sys.stderr)
+    log('Login failed, stopping.')
     raise Exception('Login failed.')
 
 instagram_browser.goto("https://www.instagram.com/explore/tags/" + tag)
@@ -82,5 +83,5 @@ wait(10)
 instagram_browser.like_pictures(number)
 
 sleep(5)
-print("Closing browser.")
+log("Closing browser.")
 browser.close()

@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup as bs
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from logger import log
+
 
 class InstagramBrowser:
     def __init__(self, browser):
@@ -12,26 +14,26 @@ class InstagramBrowser:
         self.wait = WebDriverWait(self.browser, 20)
 
     def print_contents(self):
-        print('Url: ' + self.browser.current_url, file=sys.stderr)
-        print('Content: ' + self.browser.page_source[0:250], file=sys.stderr)
+        log('Url: ' + self.browser.current_url)
+        log('Content: ' + self.browser.page_source[0:250])
 
     def goto(self, url):
-        print("Opening '" + url + "'.", file=sys.stderr)
+        log("Opening '" + url + "'.")
         self.browser.get(url)
 
     def first_picture(self):
         # finds the first picture
         pic = self.browser.find_element_by_class_name("kIKUG")
-        pic.click()   # clicks on the first picture
+        pic.click()  # clicks on the first picture
 
     def like_pic(self):
         try:
             like = self.browser.find_element_by_class_name('fr66n')
-            soup = bs(like.get_attribute('innerHTML'),'html.parser')
-            if(soup.find('svg')['aria-label'] == 'Like'):
+            soup = bs(like.get_attribute('innerHTML'), 'html.parser')
+            if (soup.find('svg')['aria-label'] == 'Like'):
                 like.click()
         except:
-            print("Like button not found, moving on to the next picture.", file=sys.stderr)
+            log("Like button not found, moving on to the next picture.")
             return 0
 
     def next_picture(self):
@@ -49,10 +51,10 @@ class InstagramBrowser:
         self.like_pic()
         fail_counter = 0
         number -= 1
-        print("Liked, " + str(number) + " left.", file=sys.stderr)
+        log("Liked, " + str(number) + " left.")
         while number > 0:
             number -= 1
-            print("Liked, " + str(number) + " left.", file=sys.stderr)
+            log("Liked, " + str(number) + " left.")
             next_el = self.next_picture()
             # if next button is there then
             if next_el != False:
@@ -64,13 +66,13 @@ class InstagramBrowser:
                 if self.like_failed():
                     fail_counter += 1
                     if fail_counter > 10:
-                        print("Like failed 10 consecutive times, stopping.")
+                        log("Like failed 10 consecutive times, stopping.")
                         return
                 else:
                     fail_counter = 0
 
             else:
-                print("Next picture not found.", file=sys.stderr)
+                log("Next picture not found.")
                 break
 
     def login(self, username, password):
