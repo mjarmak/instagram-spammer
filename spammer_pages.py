@@ -77,16 +77,21 @@ class InstagramBrowser:
                 break
 
     def login(self, username, password):
-
-        # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='aOOlW  bIiDR  ']"))).click()
-        self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "bIiDR"))).click()
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(username)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(password)
-        # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='username']"))).send_keys(username)
-        # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password)
-        # self.browser.find_element_by_class_name('bIiDR').click()
-        # self.browser.find_element_by_css_selector("input[name='username']").send_keys(username)
-        # self.browser.find_element_by_css_selector("input[name='password']").send_keys(password)
-        sleep(1)
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
-        # self.browser.find_element_by_xpath("//button[@type='submit']").click()
+        try:
+            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='aOOlW  bIiDR  ']"))).click()
+            self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "bIiDR"))).click()
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(username)
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(password)
+            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='username']"))).send_keys(username)
+            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password)
+            # self.browser.find_element_by_class_name('bIiDR').click()
+            # self.browser.find_element_by_css_selector("input[name='username']").send_keys(username)
+            # self.browser.find_element_by_css_selector("input[name='password']").send_keys(password)
+            sleep(1)
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
+            # self.browser.find_element_by_xpath("//button[@type='submit']").click()
+        except:
+            print('Refreshing page.')
+            self.goto(self.browser.current_url)
+            sleep(10)
+            self.login(username, password)
