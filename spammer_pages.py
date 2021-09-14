@@ -1,10 +1,12 @@
-import sys
 from time import sleep
+
 import selenium
 from bs4 import BeautifulSoup as bs
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 from logger import log
 
 
@@ -78,19 +80,13 @@ class InstagramBrowser:
 
     def login(self, username, password):
         try:
-            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.XPATH, "//button[@class='aOOlW  bIiDR  ']"))).click()
             self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "bIiDR"))).click()
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(username)
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(password)
-            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='username']"))).send_keys(username)
-            # WebDriverWait(self.browser, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='password']"))).send_keys(password)
-            # self.browser.find_element_by_class_name('bIiDR').click()
-            # self.browser.find_element_by_css_selector("input[name='username']").send_keys(username)
-            # self.browser.find_element_by_css_selector("input[name='password']").send_keys(password)
             sleep(1)
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
             # self.browser.find_element_by_xpath("//button[@type='submit']").click()
-        except:
+        except TimeoutException:
             print('Refreshing page.')
             self.goto(self.browser.current_url)
             sleep(10)
