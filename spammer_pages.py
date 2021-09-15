@@ -57,7 +57,8 @@ class InstagramBrowser:
         log("Liked, " + str(number) + " left.")
         while number > 0:
             number -= 1
-            log("Liked, " + str(number) + " left.")
+            if number % 20 == 0:
+                log("Liked, " + str(number) + " left.")
             next_el = self.next_picture()
             # if next button is there then
             if next_el != False:
