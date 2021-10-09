@@ -22,34 +22,30 @@ def wait(seconds):
     sleep(seconds)
 
 
-tag = sys.argv[1]
+url_param = sys.argv[1]
 number = int(sys.argv[2])
 type = sys.argv[3]
+user = sys.argv[4]
 
 now = time.strftime("%H:%M:%S")
 log("Started at " + now)
-log("Tag: " + tag + ", Number: " + str(number) + ".")
+log("Tag: " + url_param + ", Number: " + str(number) + ".")
 
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
-log("USERNAME " + USERNAME)
 log("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
 log("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
 
-if type and type == 'mobile':
-    log('Mobile view.')
-    mobile_emulation = {"deviceName": "iPad"}
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
+log('Mobile view.')
+mobile_emulation = {"deviceName": "iPad"}
+options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 
-options.add_argument("--headless")
-# options.add_argument("--window-size=1920,1080")
+# options.add_argument("--headless")
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--allow-running-insecure-content')
 options.add_argument("--disable-extensions")
@@ -57,6 +53,10 @@ options.add_argument("--start-maximized")
 options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
+
+USERNAME = os.environ.get("USERNAME" + user)
+PASSWORD = os.environ.get("PASSWORD" + user)
+log("USERNAME " + USERNAME)
 
 options.binary_location = GOOGLE_CHROME_BIN
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
@@ -76,7 +76,10 @@ if "Login" in instagram_browser.browser.title:
     log('Login failed, stopping.')
     raise Exception('Login failed.')
 
-instagram_browser.goto("https://www.instagram.com/explore/tags/" + tag)
+if type and type == 'tag':
+    instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
+elif type and type == 'url':
+    instagram_browser.goto(url_param)
 instagram_browser.print_contents()
 wait(10)
 

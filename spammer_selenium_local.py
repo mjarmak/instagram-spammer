@@ -19,20 +19,19 @@ def wait(seconds):
     sleep(seconds)
 
 
-tag = sys.argv[1]
+url_param = sys.argv[1]
 number = int(sys.argv[2])
 type = sys.argv[3]
 
 now = time.strftime("%H:%M:%S")
 print("Started at " + now, file=sys.stderr)
-print("Tag: " + tag + ", Number: " + str(number) + ".", file=sys.stderr)
+print("Tag: " + url_param + ", Number: " + str(number) + ".", file=sys.stderr)
 
 options = webdriver.ChromeOptions()
 
-if type and type == 'mobile':
-    print('Mobile view.')
-    mobile_emulation = {"deviceName": "iPad"}
-    options.add_experimental_option("mobileEmulation", mobile_emulation)
+print('Mobile view.')
+mobile_emulation = {"deviceName": "iPad"}
+options.add_experimental_option("mobileEmulation", mobile_emulation)
 
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
@@ -55,14 +54,19 @@ browser = webdriver.Chrome(options=options)
 
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
-instagram_browser.goto('https://www.instagram.com/accounts/login')
+instagram_browser.goto('https://www.instagram.com/')
 print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 wait(5)
 print("Logged in.", file=sys.stderr)
-instagram_browser.goto("https://www.instagram.com/explore/tags/" + tag)
+
+if type and type == 'tag':
+    instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
+elif type and type == 'url':
+    instagram_browser.goto(url_param)
+
 instagram_browser.print_contents()
 
 instagram_browser.like_pictures(number)
