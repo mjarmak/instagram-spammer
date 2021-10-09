@@ -31,6 +31,10 @@ now = time.strftime("%H:%M:%S")
 log("Started at " + now)
 log("Tag: " + url_param + ", Number: " + str(number) + ".")
 
+USERNAME = user
+PASSWORD = os.environ.get("PASSWORD_" + user)
+log("USERNAME " + USERNAME)
+
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN")
 CHROMEDRIVER_PATH = os.environ.get("CHROMEDRIVER_PATH")
 log("CHROMEDRIVER_PATH " + CHROMEDRIVER_PATH)
@@ -38,7 +42,6 @@ log("GOOGLE_CHROME_BINARY " + GOOGLE_CHROME_BIN)
 
 options = webdriver.ChromeOptions()
 
-log('Mobile view.')
 mobile_emulation = {"deviceName": "iPad"}
 options.add_experimental_option("mobileEmulation", mobile_emulation)
 
@@ -53,10 +56,6 @@ options.add_argument("--start-maximized")
 options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
-
-USERNAME = os.environ.get("USERNAME" + user)
-PASSWORD = os.environ.get("PASSWORD" + user)
-log("USERNAME " + USERNAME)
 
 options.binary_location = GOOGLE_CHROME_BIN
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)

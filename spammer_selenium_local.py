@@ -29,7 +29,6 @@ print("Tag: " + url_param + ", Number: " + str(number) + ".", file=sys.stderr)
 
 options = webdriver.ChromeOptions()
 
-print('Mobile view.')
 mobile_emulation = {"deviceName": "iPad"}
 options.add_experimental_option("mobileEmulation", mobile_emulation)
 
