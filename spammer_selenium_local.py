@@ -57,13 +57,13 @@ instagram_browser.goto('https://www.instagram.com/')
 print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
 # browser.get_screenshot_as_file("screenshot.png")
-instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
+instagram_browser.login("grandpashouse.be", "b$ExYGEX13F5vaP")
 wait(5)
 print("Logged in.", file=sys.stderr)
 
 if type and type == 'tag':
     instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
-elif type and type == 'url':
+elif type and type == 'url': # no more than 10 because this technique is more restricted to protect communities
     instagram_browser.goto(url_param)
 
 instagram_browser.print_contents()

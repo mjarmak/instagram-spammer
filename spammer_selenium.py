@@ -77,7 +77,7 @@ if "Login" in instagram_browser.browser.title:
 
 if type and type == 'tag':
     instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
-elif type and type == 'url':
+elif type and type == 'url': # no more than 10 because this technique is more restricted to protect communities
     instagram_browser.goto(url_param)
 instagram_browser.print_contents()
 wait(10)
