@@ -2,7 +2,8 @@
 To get this working:
 
 ## For local runs:
-- geckodriver exe from https://github.com/mozilla/geckodriver/releases/tag/v0.29.1
+- geckodriver exe: https://github.com/mozilla/geckodriver/releases/tag/v0.29.1
+- chromedriver.exe: https://chromedriver.chromium.org/downloads
 
 ## For Heroku cloud runs:
 ### Buildpacks:
