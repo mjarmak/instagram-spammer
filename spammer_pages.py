@@ -45,7 +45,7 @@ class InstagramBrowser:
             return True
         except selenium.common.exceptions.NoSuchElementException:
             try:
-                self.browser.find_element_by_class_name("QBdPU").click() # other button kind in case the normal one is not used
+                self.browser.find_element_by_class_name("l8mY4 ").click() # other button kind in case the normal one is not used
                 return True
             except selenium.common.exceptions.NoSuchElementException:
                 return False
@@ -86,6 +86,7 @@ class InstagramBrowser:
     def login(self, username, password):
         try:
             self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "bIiDR"))).click()
+            sleep(5)
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(username)
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(password)
             sleep(1)
