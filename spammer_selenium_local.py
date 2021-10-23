@@ -1,6 +1,8 @@
 #! /bin/bash
 "exec" "$(which python3)" "$0" "$*"
 
+# python ./spammer_selenium_local.py https://www.instagram.com/explore/locations/213633143/brussels-belgium 5 url
+
 import sys
 from time import sleep
 from selenium import webdriver
@@ -46,9 +48,6 @@ options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
 
-user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
-options.add_argument(f'user-agent={user_agent}')
-
 browser = webdriver.Chrome(options=options)
 
 browser.implicitly_wait(1)
@@ -58,6 +57,7 @@ print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser.login("grandpashouse.be", "b$ExYGEX13F5vaP")
+# instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 wait(5)
 print("Logged in.", file=sys.stderr)
 

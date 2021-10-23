@@ -44,7 +44,11 @@ class InstagramBrowser:
             self.browser.find_element_by_class_name("coreSpriteRightPaginationArrow").click()
             return True
         except selenium.common.exceptions.NoSuchElementException:
-            return False
+            try:
+                self.browser.find_element_by_class_name("QBdPU").click() # other button kind in case the normal one is not used
+                return True
+            except selenium.common.exceptions.NoSuchElementException:
+                return False
 
     def like_failed(self):
         return False
