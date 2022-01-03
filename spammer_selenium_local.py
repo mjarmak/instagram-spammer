@@ -57,7 +57,6 @@ print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
 # browser.get_screenshot_as_file("screenshot.png")
 instagram_browser.login("nope", "nope")
-# instagram_browser.login("mjarmak", "B~ND9c,Q$4zscyU")
 wait(5)
 print("Logged in.", file=sys.stderr)
 
