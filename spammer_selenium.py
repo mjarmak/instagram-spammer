@@ -31,7 +31,7 @@ now = time.strftime("%H:%M:%S")
 log("Started at " + now)
 log("Tag: " + url_param + ", Number: " + str(number) + ".")
 
-USERNAME = user
+USERNAME = os.environ.get("USERNAME_" + user)
 PASSWORD = os.environ.get("PASSWORD_" + user)
 log("USERNAME " + USERNAME)
 
