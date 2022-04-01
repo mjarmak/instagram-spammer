@@ -3,7 +3,6 @@ from time import sleep
 import selenium
 from bs4 import BeautifulSoup as bs
 from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
-from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
