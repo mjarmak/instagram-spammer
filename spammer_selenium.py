@@ -71,7 +71,7 @@ log("Logged in.")
 wait(10)
 instagram_browser.print_contents()
 
-if "Login" in instagram_browser.browser.title:
+if "We couldn't connect to Instagram" in instagram_browser.browser.page_source or "Please wait a few minutes before" in instagram_browser.browser.page_source:
     log('Login failed, stopping.')
     raise Exception('Login failed.')
 

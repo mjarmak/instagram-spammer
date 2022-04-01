@@ -104,6 +104,8 @@ class InstagramBrowser:
         for pic in pics:
             try:
                 pic.click()
+                sleep(2)
+                log("liked")
             except ElementNotInteractableException:
                 log("nope")
 
