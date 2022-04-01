@@ -93,7 +93,7 @@ try:
     instagram_browser.decline_notifications()
     wait(2)
     instagram_browser.like_pictures_in_feed(number)
-    sleep(5)
+    wait(5)
 except:
     log('ERROR')
 
