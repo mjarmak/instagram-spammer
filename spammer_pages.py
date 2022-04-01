@@ -2,7 +2,8 @@ from time import sleep
 
 import selenium
 from bs4 import BeautifulSoup as bs
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -45,7 +46,8 @@ class InstagramBrowser:
             return True
         except selenium.common.exceptions.NoSuchElementException:
             try:
-                self.browser.find_element_by_class_name("l8mY4 ").click() # other button kind in case the normal one is not used
+                self.browser.find_element_by_class_name(
+                    "l8mY4 ").click()  # other button kind in case the normal one is not used
                 return True
             except selenium.common.exceptions.NoSuchElementException:
                 return False
@@ -91,9 +93,49 @@ class InstagramBrowser:
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(password)
             sleep(1)
             self.wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
-            # self.browser.find_element_by_xpath("//button[@type='submit']").click()
         except TimeoutException:
-            print('Refreshing page.')
+            log('Refreshing page.')
             self.goto(self.browser.current_url)
             sleep(10)
             self.login(username, password)
+
+    def like_pictures_in_feed(self, number):
+
+        pics = self.gather_pictures_in_feed()
+        for pic in pics:
+            try:
+                pic.click()
+            except ElementNotInteractableException:
+                log("nope")
+
+        # scroll_count = 0
+        # log("Scroll limit: " + str(number))
+        # while scroll_count < number:
+        #     try:
+        #         el = self.browser.find_element(By.CLASS_NAME, "             qF0y9          Igw0E     IwRSH      eGOV_         _4EzTm                                                                                                              ")
+        #         el.send_keys(Keys.PAGE_DOWN)
+        #         el.send_keys(Keys.PAGE_DOWN)
+        #         el.send_keys(Keys.PAGE_DOWN)
+        #         el.send_keys(Keys.PAGE_DOWN)
+        #         el.send_keys(Keys.PAGE_DOWN)
+        #         log("Scrolls: " + str(scroll_count))
+        #         sleep(1)
+        #         pics = self.gather_pictures_in_feed()
+        #         for pic in pics:
+        #             try:
+        #                 pic.click()
+        #             except ElementNotInteractableException:
+        #                 log("nope")
+        #         scroll_count += 1
+        #     except Exception as err:
+        #         log("ERROR")
+        #         return
+
+    def decline_notifications(self):
+        log("Decline Notifications")
+        self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Not Now')]"))).click()
+
+    def gather_pictures_in_feed(self):
+        log("Gathering Posts...")
+        pics = self.browser.find_elements_by_css_selector("[aria-label=Like]")
+        return pics
