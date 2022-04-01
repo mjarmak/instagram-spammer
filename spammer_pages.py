@@ -133,8 +133,11 @@ class InstagramBrowser:
         #         return
 
     def decline_notifications(self):
-        log("Decline Notifications")
-        self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Not Now')]"))).click()
+        try:
+            log("Decline Notifications")
+            self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Not Now')]"))).click()
+        except Exception:
+            log("There is no decline notifications button")
 
     def gather_pictures_in_feed(self):
         log("Gathering Posts...")
