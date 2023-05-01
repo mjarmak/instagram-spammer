@@ -21,9 +21,9 @@ def wait(seconds):
     sleep(seconds)
 
 
-url_param = sys.argv[1]
-number = int(sys.argv[2])
-type = sys.argv[3]
+url_param = 'brussels'
+number = 100
+type = 'tag'
 
 now = time.strftime("%H:%M:%S")
 print("Started at " + now, file=sys.stderr)
@@ -49,6 +49,8 @@ options.add_argument("--proxy-bypass-list=*")
 options.add_argument('--disable-dev-shm-usage')
 
 browser = webdriver.Chrome(options=options)
+USERNAME = "mjarmak"
+PASSWORD = "tfTYh5vt666_-"
 
 browser.implicitly_wait(1)
 instagram_browser = InstagramBrowser(browser)
@@ -56,7 +58,9 @@ instagram_browser.goto('https://www.instagram.com/')
 print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
 # browser.get_screenshot_as_file("screenshot.png")
-instagram_browser.login("nope", "nope")
+instagram_browser.accept_cookies()
+
+instagram_browser.login(USERNAME, PASSWORD)
 wait(5)
 print("Logged in.", file=sys.stderr)
 
@@ -67,7 +71,7 @@ elif type and type == 'url': # no more than 10 because this technique is more re
 
 instagram_browser.print_contents()
 
-instagram_browser.like_pictures(number)
+instagram_browser.like_pictures(number, USERNAME, PASSWORD)
 
 sleep(5)
 print("Closing browser.")

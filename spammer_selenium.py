@@ -66,6 +66,7 @@ instagram_browser.goto('https://www.instagram.com')
 wait(10)
 log('Opened Instagram.')
 instagram_browser.print_contents()
+instagram_browser.accept_cookies()
 instagram_browser.login(USERNAME, PASSWORD)
 log("Logged in.")
 wait(10)
@@ -82,7 +83,7 @@ elif type and type == 'url': # no more than 10 because this technique is more re
 instagram_browser.print_contents()
 wait(10)
 
-instagram_browser.like_pictures(number)
+instagram_browser.like_pictures(number, USERNAME, PASSWORD)
 
 sleep(5)
 log("Closing browser.")

@@ -7,6 +7,7 @@ To get this working:
 
 ## For Heroku cloud runs:
 ### Buildpacks:
+You must redeploy to install the buildpacks.
 - heroku buildpacks:add -a instagram-spammer-production --index 2 https://github.com/heroku/heroku-buildpack-google-chrome
 - heroku buildpacks:add -a instagram-spammer-production --index 1 https://github.com/heroku/heroku-buildpack-chromedriver
 
