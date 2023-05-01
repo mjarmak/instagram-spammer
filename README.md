@@ -1,5 +1,6 @@
 # instagram-spammer
 To get this working:
+heroku run --app instagram-spammer-production python ./spammer_selenium.py brussels 100 tag mjarmak
 
 ## For local runs:
 - geckodriver exe: https://github.com/mozilla/geckodriver/releases/tag/v0.29.1
