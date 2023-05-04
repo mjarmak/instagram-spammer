@@ -43,7 +43,8 @@ class InstagramBrowser:
         try:
             # like_button = '._ae1h, ._ae2q'
             # TODO not working
-            like_btn = self.wait.until(EC.element_to_be_clickable(By.XPATH, ".x1n2onr6[type='svg']"))
+            like_btn = self.wait.until(EC.element_to_be_clickable(By.XPATH, "//button[@class='_abl-']"))
+
             # like_btn = self.browser.find_element_by_css_selector(".x1n2onr6[type='svg']")
             like_btn.click()
 
