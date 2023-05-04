@@ -61,7 +61,7 @@ options.binary_location = GOOGLE_CHROME_BIN
 browser = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 
 browser.implicitly_wait(1)
-instagram_browser = InstagramBrowser(browser)
+instagram_browser = InstagramBrowser(browser, type, url_param, number)
 instagram_browser.goto('https://www.instagram.com')
 wait(10)
 log('Opened Instagram.')
@@ -76,14 +76,7 @@ if "We couldn't connect to Instagram" in instagram_browser.browser.page_source o
     log('Login failed, stopping.')
     raise Exception('Login failed.')
 
-if type and type == 'tag':
-    instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
-elif type and type == 'url': # no more than 10 because this technique is more restricted to protect communities
-    instagram_browser.goto(url_param)
-instagram_browser.print_contents()
-wait(10)
-
-instagram_browser.like_pictures(number, USERNAME, PASSWORD)
+instagram_browser.like_pictures()
 
 sleep(5)
 log("Closing browser.")

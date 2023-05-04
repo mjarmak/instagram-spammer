@@ -12,9 +12,12 @@ from logger import log
 
 class InstagramBrowser:
 
-    def __init__(self, browser):
+    def __init__(self, browser, type, url_param, number):
         self.browser = browser
-        self.wait = WebDriverWait(self.browser, 20)
+        self.wait = WebDriverWait(self.browser, 10)
+        self.type = type
+        self.url_param = url_param
+        self.number = number
 
     def print_contents(self):
         log('Url: ' + self.browser.current_url)
@@ -30,20 +33,27 @@ class InstagramBrowser:
             # finds the first picture
             # other css selectors: x1i10hfl xjbqb8w x6umtig x1b1mbwd xaqea5y xav7gou x9f619 x1ypdohk xt0psk2 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x16tdsg8 x1hl2dhg xggy1nq x1a2a7pz _a6hd
             first_picture = "_aagw"
-            pic = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, first_picture))).click()
+            pic = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, first_picture)))
             pic.click()  # clicks on the first picture
         except:
-            log('Refreshing page.')
-            self.goto(self.browser.current_url)
-            sleep(10)
+            log('first_picture failed, Refreshing page.')
+            self.like_pictures()
 
     def like_pic(self):
         try:
-            like_button = 'fr66n'
-            like = self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, like_button))).click()
-            soup = bs(like.get_attribute('innerHTML'), 'html.parser')
-            if (soup.find('svg')['aria-label'] == 'Like'):
-                like.click()
+            # like_button = '._ae1h, ._ae2q'
+            # TODO not working
+            like_btn = self.wait.until(EC.element_to_be_clickable(By.XPATH, ".x1n2onr6[type='svg']"))
+            # like_btn = self.browser.find_element_by_css_selector(".x1n2onr6[type='svg']")
+            like_btn.click()
+
+            # like = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, like_button)))
+            # like.click()
+            # like = self.browser.find_elements_by_css_selector("[aria-label=Like]")
+            # like.click()
+            # soup = bs(like.get_attribute('innerHTML'), 'html.parser')
+            # if (soup.find('svg')['aria-label'] == 'Like'):
+            #     like.click()
         except:
             log("Like button not found, moving on to the next picture.")
             return 0
@@ -65,18 +75,24 @@ class InstagramBrowser:
     def like_failed(self):
         return False
 
-    def like_pictures(self, number, USERNAME, PASSWORD):
+    def like_pictures(self):
+
+        if self.type and self.type == 'tag':
+            self.goto("https://www.instagram.com/explore/tags/" + self.url_param)
+        elif self.type and self.type == 'url': # no more than 10 because this technique is more restricted to protect communities
+            self.goto(self.url_param)
+        self.print_contents()
         try:
             sleep(10)
             self.first_picture()
             self.like_pic()
             fail_counter = 0
-            number -= 1
-            log("Liked, " + str(number) + " left.")
-            while number > 0:
-                number -= 1
-                if number % 20 == 0:
-                    log("Liked, " + str(number) + " left.")
+            self.number -= 1
+            log("Liked, " + str(self.number) + " left.")
+            while self.number > 0:
+                self.number -= 1
+                if self.number % 20 == 0:
+                    log("Liked, " + str(self.number) + " left.")
                 next_el = self.next_picture()
                 # if next button is there then
                 if next_el != False:
@@ -97,9 +113,8 @@ class InstagramBrowser:
                     log("Next picture not found.")
                     break
         except TimeoutException:
-            log('Refreshing page.')
-            self.goto(self.browser.current_url)
-            sleep(10)
+            log('like_pictures failed, Refreshing page.')
+            self.like_pictures()
 
     def login(self, username, password):
         try:
@@ -111,7 +126,7 @@ class InstagramBrowser:
             login_button = "_acas"
             self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, login_button))).click()
         except TimeoutException:
-            log('Refreshing page.')
+            log('login failed, Refreshing page.')
             self.goto(self.browser.current_url)
             sleep(10)
             self.login(username, password)

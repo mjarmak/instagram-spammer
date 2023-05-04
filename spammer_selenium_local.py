@@ -53,7 +53,7 @@ USERNAME = "mjarmak"
 PASSWORD = "tfTYh5vt666_-"
 
 browser.implicitly_wait(1)
-instagram_browser = InstagramBrowser(browser)
+instagram_browser = InstagramBrowser(browser, type, url_param, number)
 instagram_browser.goto('https://www.instagram.com/')
 print('Opened Instagram.', file=sys.stderr)
 instagram_browser.print_contents()
@@ -61,17 +61,16 @@ instagram_browser.print_contents()
 instagram_browser.accept_cookies()
 
 instagram_browser.login(USERNAME, PASSWORD)
-wait(5)
 print("Logged in.", file=sys.stderr)
-
-if type and type == 'tag':
-    instagram_browser.goto("https://www.instagram.com/explore/tags/" + url_param)
-elif type and type == 'url': # no more than 10 because this technique is more restricted to protect communities
-    instagram_browser.goto(url_param)
-
+wait(10)
 instagram_browser.print_contents()
 
-instagram_browser.like_pictures(number, USERNAME, PASSWORD)
+
+if "We couldn't connect to Instagram" in instagram_browser.browser.page_source or "Please wait a few minutes before" in instagram_browser.browser.page_source:
+    log('Login failed, stopping.')
+    raise Exception('Login failed.')
+
+instagram_browser.like_pictures()
 
 sleep(5)
 print("Closing browser.")
