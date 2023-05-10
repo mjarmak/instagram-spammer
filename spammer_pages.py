@@ -1,7 +1,6 @@
 from time import sleep
 
 import selenium
-from bs4 import BeautifulSoup as bs
 from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,7 +13,7 @@ class InstagramBrowser:
 
     def __init__(self, browser, type, url_param, number):
         self.browser = browser
-        self.wait = WebDriverWait(self.browser, 10)
+        self.wait = WebDriverWait(self.browser, 2)
         self.type = type
         self.url_param = url_param
         self.number = number
@@ -41,36 +40,39 @@ class InstagramBrowser:
 
     def like_pic(self):
         try:
-            # like_button = '._ae1h, ._ae2q'
             # TODO not working
-            like_btn = self.wait.until(EC.element_to_be_clickable(By.XPATH, "//button[@class='_abl-']"))
-
-            # like_btn = self.browser.find_element_by_css_selector(".x1n2onr6[type='svg']")
-            like_btn.click()
-
-            # like = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, like_button)))
-            # like.click()
-            # like = self.browser.find_elements_by_css_selector("[aria-label=Like]")
-            # like.click()
-            # soup = bs(like.get_attribute('innerHTML'), 'html.parser')
-            # if (soup.find('svg')['aria-label'] == 'Like'):
-            #     like.click()
-        except:
-            log("Like button not found, moving on to the next picture.")
-            return 0
+            self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Like"]'))).click()
+        except Exception:
+            try:
+                log("Try again.")
+                sleep(1)
+                self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Like"]'))).click()
+            except Exception:
+                try:
+                    log("Try again.")
+                    sleep(1)
+                    self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Like"]'))).click()
+                    sleep(1)
+                except Exception:
+                    log("Like button not found, moving on to the next picture.")
+                    return 0
 
     def next_picture(self):
         try:
-            next_button = "coreSpriteRightPaginationArrow"
-            self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, next_button))).click()
+            # next_button = "coreSpriteRightPaginationArrow"
+            # self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME, next_button))).click()
+            # self.wait.until(EC.element_to_be_clickable((By.XPATH, "//svg[aria-label='Next']"))).click()
+            self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[aria-label="Next"]'))).click()
             return True
         except selenium.common.exceptions.NoSuchElementException:
+            log("Next picture button not found, looking for alternative.")
             try:
                 next_button_alternative = "l8mY4 "
                 self.wait.until(EC.element_to_be_clickable((By.CLASS_NAME,
                                                             next_button_alternative))).click()  # other button kind in case the normal one is not used
                 return True
             except selenium.common.exceptions.NoSuchElementException:
+                log("Alternative next picture button not found, looking for alternative.")
                 return False
 
     def like_failed(self):
@@ -142,30 +144,6 @@ class InstagramBrowser:
                 log("liked")
             except ElementNotInteractableException:
                 log("nope")
-
-        # scroll_count = 0
-        # log("Scroll limit: " + str(number))
-        # while scroll_count < number:
-        #     try:
-        #         el = self.browser.find_element(By.CLASS_NAME, "             qF0y9          Igw0E     IwRSH      eGOV_         _4EzTm                                                                                                              ")
-        #         el.send_keys(Keys.PAGE_DOWN)
-        #         el.send_keys(Keys.PAGE_DOWN)
-        #         el.send_keys(Keys.PAGE_DOWN)
-        #         el.send_keys(Keys.PAGE_DOWN)
-        #         el.send_keys(Keys.PAGE_DOWN)
-        #         log("Scrolls: " + str(scroll_count))
-        #         sleep(1)
-        #         pics = self.gather_pictures_in_feed()
-        #         for pic in pics:
-        #             try:
-        #                 pic.click()
-        #             except ElementNotInteractableException:
-        #                 log("nope")
-        #         scroll_count += 1
-        #     except Exception as err:
-        #         log("ERROR")
-        #         return
-
     def decline_notifications(self):
         try:
             log("Decline Notifications")
